@@ -3,16 +3,8 @@ sequenceDiagram
 participant browser
 participant server
 
-browser->>+server: GET https://studies.cs.helsinki.fi/exampleapp/spa
-server-->>-browser: HTML document
+browser->>+server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->>-browser: Status code 201, Created
 
-browser->>+server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
-server-->>-browser: spa.js file
-
-Note over browser: Executes js code that fetches json data
-
-browser->>+server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->>-browser: json data
-
-Note over browser: Displays fetched json data
+Note over browser: Browser rerenders the note list with the newly added note via js
 ```
