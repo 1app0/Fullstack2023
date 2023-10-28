@@ -1,6 +1,4 @@
-import Header from './Header'
-import Content from './Content'
-import Total from './Total'
+import Course from './components/Course'
 
 export default function App() {
   const course = {
@@ -23,9 +21,7 @@ export default function App() {
 
   return (
     <div>
-      <Header course={course} />
-      <Content course={course} />
-      <Total course={course} />
+      <Course course={course} />
     </div>
   )
 }
