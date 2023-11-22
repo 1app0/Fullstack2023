@@ -1,6 +1,8 @@
 import Header from './Header'
 import Content from './Content'
 import Total from './Total'
+import Select from 'react-select'
+import AsyncSelect from 'react-select/async'
 
 export default function App() {
   const course = {
@@ -21,11 +23,26 @@ export default function App() {
     ],
   }
 
+  const options = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' },
+  ]
+
+  const promiseOptions = async () => {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(options)
+      }, 1000)
+    })
+  }
+
   return (
     <div>
       <Header course={course} />
       <Content course={course} />
       <Total course={course} />
+      <AsyncSelect loadOptions={promiseOptions} defaultOptions={true} />
     </div>
   )
 }
