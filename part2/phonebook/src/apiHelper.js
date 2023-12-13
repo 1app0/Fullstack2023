@@ -11,7 +11,13 @@ const savePerson = async person => {
   return response.data
 }
 
+const deletePerson = async id => {
+  const response = await axios.delete(`${baseUrl}/${id}`)
+  return response.data
+}
+
 export default {
   fetchPersons,
   savePerson,
+  deletePerson,
 }

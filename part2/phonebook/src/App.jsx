@@ -26,6 +26,10 @@ const App = () => {
 
   const addPerson = async event => {
     event.preventDefault()
+    if (!newName || !newNumber) {
+      alert('Please input name and number')
+      return
+    }
 
     const repeatedPerson = persons.some(person => person.name === newName)
     if (repeatedPerson) {
@@ -45,6 +49,19 @@ const App = () => {
     setNewNumber('')
   }
 
+  const deletePerson = async id => {
+    const personToDelete = persons.find(person => person.id === id)
+    if (!personToDelete) {
+      alert('This person has already been deleted')
+      const updatedPersons = persons.filter(person => person.id !== id)
+      setPersons(updatedPersons)
+    }
+
+    await apiHelper.deletePerson(personToDelete.id)
+    const updatedPersons = persons.filter(person => person.id !== id)
+    setPersons(updatedPersons)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -60,7 +77,11 @@ const App = () => {
         newNumber={newNumber}
       />
       <h2>Phonebook</h2>
-      <Persons persons={persons} filter={filteredName} />
+      <Persons
+        persons={persons}
+        filter={filteredName}
+        onButtonPress={deletePerson}
+      />
     </div>
   )
 }
