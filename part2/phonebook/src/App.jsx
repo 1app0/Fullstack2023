@@ -26,14 +26,37 @@ const App = () => {
 
   const addPerson = async event => {
     event.preventDefault()
+
     if (!newName || !newNumber) {
       alert('Please input name and number')
       return
     }
 
-    const repeatedPerson = persons.some(person => person.name === newName)
+    const repeatedPerson = persons.find(person => person.name === newName)
     if (repeatedPerson) {
+      if (newNumber !== repeatedPerson.number) {
+        const result = confirm(
+          `${newName} is already added to the phonebook, replace the old number with the new one?`
+        )
+
+        if (result) {
+          const foundPerson = persons.find(person => person.name === newName)
+          const newPerson = { ...foundPerson, number: newNumber }
+          const returnedPerson = await apiHelper.updatePerson(newPerson)
+
+          setPersons(
+            persons.map(person =>
+              person.name === returnedPerson.name ? returnedPerson : person
+            )
+          )
+          setNewName('')
+          setNewNumber('')
+        }
+
+        return
+      }
       setNewName('')
+      setNewNumber('')
       alert(`${newName} already exists in the phonebook`)
       return
     }
